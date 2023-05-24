@@ -8,7 +8,7 @@ const Post = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id"
+          "https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id&page=4"
           // `https://smitde5-rest-api.onRender.com/api/v1/${data}?page=${pageNumber}`
         );
         setData(res.data.data);
@@ -25,7 +25,9 @@ const Post = () => {
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>Description</th>
+          {/* <th>Description</th> */}
+          <th>Element</th>
+          {/* <th>Affinity</th> */}
         </tr>
       </thead>
       <tbody>
@@ -33,7 +35,11 @@ const Post = () => {
           <tr>
             <td>{d.id}</td>
             <td>{d.name}</td>
-            <td>{d.description}</td>
+            {/* <td>{d.description}</td> */}
+            <td>{d.element.map((e) => (
+              e.element
+            ))}</td>
+            {/* <td>{d.affinity}</td> */}
           </tr>
         ))}
       </tbody>

@@ -28,7 +28,7 @@ const Navigation = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ms-auto" navbar>
-          <NavItem>
+            <NavItem>
               <NavLink href="/create">Create</NavLink>
             </NavItem>
             <NavItem>
@@ -43,7 +43,7 @@ const Navigation = () => {
       <Routes>
         <Route path="/create" element={<CharacterForm />} />
         <Route path="/characters" element={<Characters />} />
-        <Route path="/elements" element={<Elements/>} />
+        <Route path="/elements" element={<Elements />} />
       </Routes>
     </Router>
   );
