@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const CharacterForm = () => {
     const [name, setName] = useState("");
+    const [characterId, setCharacterId] = useState(null);
     const [rarity, setRarity] = useState([]);
     const [element, setElement] = useState("");
     const [affinity, setAffinity] = useState("");
@@ -10,11 +11,12 @@ const CharacterForm = () => {
     const [description, setDescription] = useState("");
     const [attributes, setAttributes] = useState(null);
     const [affinityBonus, setAffinityBonus] = useState(null);
+    
 
 
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
-    const [data, setData] = useState([]);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -24,19 +26,20 @@ const CharacterForm = () => {
                 name,
                 affinity,
                 description,
-            }
+            };
+
+            const elementData = {
+              element,
+              characterId,
+            };
+
 
             const response = await axios.post('https://smitde5-rest-api.onrender.com/api/v1/characters/', characterData);
-            const { msg, characterId } = await response.data.id;
-            setData(response.data);
-            console.log(data);
+            setCharacterId(response.data.data.id);
             // Handle the successful creation of the character
-            setMessage(`Character with the id: ${characterId} successfully created - ${msg}`);
+            setMessage(`Character with the id successfully created - `);
 
-            // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/elements', {
-            //     element,
-            //     characterId
-            // });
+            await axios.post('https://smitde5-rest-api.onrender.com/api/v1/elements', elementData);
 
             // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/personalities', {
             //     personality,
@@ -86,6 +89,10 @@ console.log("Creation successful");
           <label>
             Description:
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+          </label>
+          <label>
+            Element:
+            <input type="text" value={element} onChange={(e) => setElement(e.target.value)} />
           </label>
           {error && <div>{error}</div>}
           <button type="submit">Submit</button>

@@ -23,12 +23,14 @@ const Elements = () => {
           <thead>
             <tr>
               <th>Name</th>
+              <th>Element</th>
             </tr>
           </thead>
           <tbody>
             {data.map((e) => (
               <tr>
-                <td>{e.name}</td>
+                <td>{e.character.name}</td>
+                <td>{e.element}</td>
                 <td></td>
               </tr>
             ))}
