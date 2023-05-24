@@ -1,24 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import Dropdown from "./DropDown";
 
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+
+const affinitySelect = [
+  { value: "Light", label: "Light" },
+  { value: "Shadow", label: "Shadow" },
+];
+
+const elementSelection = [
+  { value: "None", label: "None" },
+  { value: "Fire", label: "Fire" },
+  { value: "Water", label: "Water" },
+  { value: "Earth", label: "Earth" },
+  { value: "Wind", label: "Wind" },
+  { value: "Thunder", label: "Thunder" },
+  { value: "Shade", label: "Shade" },
+  { value: "Crystal", label: "Crystal" },
+];
+
+let characterId;
 
 const CharacterForm = () => {
   const [name, setName] = useState("");
   const [affinity, setAffinity] = useState("");
   const [description, setDescription] = useState("");
-  const [characterId, setCharacterId] = useState(null);
+  // const [characterId, setCharacterId] = useState(null);
   // const [rarity, setRarity] = useState([]);
   const [element, setElement] = useState("");
   // const [personality, setPersonality] = useState("");
   // const [attributes, setAttributes] = useState(null);
 
-
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    console.log(characterId)
-  })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,34 +45,20 @@ const CharacterForm = () => {
         description,
       };
 
-      const elementData = {
-        element,
-        characterId,
-      };
-
       const response = await axios.post(
         "https://smitde5-rest-api.onrender.com/api/v1/characters/",
         characterData
-      )
-
-      if (response.status === 201) {
-      //  setMessage(response.data.msg);
-      setCharacterId(response.data.data.id);
-      // alert(characterId);
-      }
-
-
-
-      const response2 = await axios.post(
-        "https://smitde5-rest-api.onrender.com/api/v1/elements",
-        {
-          element, characterId
-        }
       );
 
-      if (response2.status === 201) {
-        console.log("Good work")
+      if (response.status === 201) {
+        //  setMessage(response.data.msg);
+        characterId = response.data.data.id;
       }
+
+      await axios.post("https://smitde5-rest-api.onrender.com/api/v1/elements", {
+        element,
+        characterId,
+      });
 
       // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/personalities', {
       //     personality,
@@ -96,44 +97,37 @@ const CharacterForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
+    <div className="App">
+      <h2>Create Character</h2>
+      <Form className="form" onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label for="">Name</Label>
+          <Input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </label>
-        <label>
-          Affinity:
-          <input
-            type="text"
-            value={affinity}
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="">Affinity</Label>
+          <Dropdown
+            options={affinitySelect}
             onChange={(e) => setAffinity(e.target.value)}
           />
-        </label>
-        <label>
-          Description:
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-        <label>
-          Element:
-          <input
-            type="text"
-            value={element}
+          <Label for="">Element</Label>
+          <Dropdown
+            options={elementSelection}
             onChange={(e) => setElement(e.target.value)}
           />
-        </label>
-        {error && <div>{error}</div>}
-        <button type="submit">Submit</button>
-      </form>
-      {message && <p>{message}</p>}
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="">Description</Label>
+          <Input type="text" onChange={(e) => setDescription(e.target.value)} />
+        </FormGroup>
+        <Button type="submit">Submit</Button>
+      </Form>
     </div>
   );
 };

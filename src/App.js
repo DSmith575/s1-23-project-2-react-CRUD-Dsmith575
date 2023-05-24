@@ -1,4 +1,3 @@
-import { Nav } from "reactstrap";
 import "./App.css";
 import Navigation from "./components/Navigation";
 
