@@ -1,7 +1,19 @@
+/**
+ * Navigation for handling routes
+ *
+ * File handles routing
+ *
+ * @file: navigation.js
+ * @version: 1.0.0
+ * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
+ * @created: 2023-05-21
+ * @updated: 2023-05-28
+ */
+
 import { useState } from "react";
-import Characters from "../components/tables/Characters.js";
-import CharacterForm from "./form/momo.js";
-import Elements from "./tables/Elements.js";
+import Characters from "./tables/character.js";
+import CharacterForm from "./form/createCharacterForm.js";
+import Elements from "./tables/elements.js";
 
 // Import the following:
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

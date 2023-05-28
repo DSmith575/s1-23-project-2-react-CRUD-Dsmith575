@@ -1,6 +1,20 @@
+/**
+ * Character table
+ *
+ * Handles displaying character table in browser
+ *
+ * @file: character.js
+ * @version: 1.0.0
+ * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
+ * @created: 2023-05-21
+ * @updated: 2023-05-28
+ */
+
 import { Table } from "reactstrap";
 import axios from "axios";
 import { useState, useEffect } from "react";
+
+import Pagination from "reactstrap";
 
 const Post = () => {
   const [data, setData] = useState([]);
@@ -8,7 +22,7 @@ const Post = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id&sortOrder=desc"
+          `https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id&sortOrder=desc`
           // `https://smitde5-rest-api.onRender.com/api/v1/${data}?page=${pageNumber}`
         );
         setData(res.data.data);
@@ -20,24 +34,24 @@ const Post = () => {
     fetchData();
   }, []);
   return (
-    <Table>
+    <Table hover bordered>
       <thead>
         <tr>
           <th>ID</th>
           <th>Name</th>
-          {/* <th>Description</th> */}
           <th>Element</th>
-          {/* <th>Affinity</th> */}
+          <th>Affinity</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
         {data.map((d) => (
-          <tr>
+          <tr key={d.id}>
             <td>{d.id}</td>
             <td>{d.name}</td>
-            {/* <td>{d.description}</td> */}
             <td>{d.element.map((e) => e.element)}</td>
-            {/* <td>{d.affinity}</td> */}
+            <td>{d.affinity}</td>
+            <td>{d.description}</td>
           </tr>
         ))}
       </tbody>
