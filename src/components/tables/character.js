@@ -23,7 +23,6 @@ const Post = () => {
       try {
         const res = await axios.get(
           `https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id&sortOrder=desc`
-          // `https://smitde5-rest-api.onRender.com/api/v1/${data}?page=${pageNumber}`
         );
         setData(res.data.data);
         // console.log(data);

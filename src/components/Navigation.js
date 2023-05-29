@@ -13,7 +13,7 @@
 import { useState } from "react";
 import Characters from "./tables/character.js";
 import CharacterForm from "./form/createCharacterForm.js";
-import Elements from "./tables/elements.js";
+import Elements from "./tables/Elements.js";
 
 // Import the following:
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

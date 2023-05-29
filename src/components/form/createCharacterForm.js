@@ -7,14 +7,14 @@
  * @version: 1.0.0
  * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
  * @created: 2023-04-22
- * @updated: 2023-05-28
+ * @updated: 2023-05-29
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
 import Dropdown from "./dropDownSelection";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import ApiPost from "../api/api";
+import { Form, FormGroup, Input, Label } from "reactstrap";
+import ApiPost from "../services/apiCreate";
+import SubmitButton from "./submitButton";
 
 const affinitySelect = [
   { value: "Light", label: "Light" },
@@ -33,80 +33,57 @@ const elementSelection = [
 ];
 
 //TODO
-//Move Submit Button to component
 //Set if setElement works without render
 
 const CharacterForm = () => {
   const [name, setName] = useState("");
   const [affinity, setAffinity] = useState("");
   const [description, setDescription] = useState("");
-  // const [characterId, setCharacterId] = useState(null);
   // const [rarity, setRarity] = useState([]);
   const [element, setElement] = useState("");
   // const [personality, setPersonality] = useState("");
   // const [attributes, setAttributes] = useState(null);
-  let characterId;
 
-  const [error, setError] = useState("");
+  let characterId;
+  //submit button validation
+  const [valid, setValid] = useState(false);
+
+  const characterData = {
+    name,
+    affinity,
+    description,
+  };
+
+  const elementData = {
+    element,
+    characterId,
+  };
+
   const [message, setMessage] = useState("");
 
-  const SubmitButton = ({ characterData }) => {
-    if (characterData) {
-      return <Button type="submit">Submit</Button>;
-    } else {
-      return (
-        <Button type="submit" disabled={true}>
-          Submit
-        </Button>
-      );
-    }
+  useEffect(() => {
+    const isValid = validate();
+    setValid(isValid);
+  }, [name, affinity, description, element]);
+
+  const validate = () => {
+    // return name.length && affinity.length && description.length
+    return name.length && affinity.length && description.length && element.length;
   };
 
   const HandleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const characterData = {
-        name,
-        affinity,
-        description,
-      };
-
-      const elementData = {
-        element,
-        characterId,
-      };
-
       const response = await ApiPost("characters", characterData);
       if (response.status === 201) {
         elementData.characterId = response.data.data.id;
-        // console.log(response.data.msg)
         await ApiPost("elements", elementData);
 
         setMessage(response.data.msg);
+
+        setName("");
+        setElement();
       }
-
-      // await axios.post("https://smitde5-rest-api.onrender.com/api/v1/elements",
-      // elementData);
-
-      // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/personalities', {
-      //     personality,
-      //     characterId
-      // });
-
-      // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/raritys', {
-      //     rarity,
-      //     characterId
-      // });
-
-      // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/attributes', {
-      //     attributes,
-      //     characterId
-      // });
-
-      // await axios.post('https://smitde5-rest-api.onrender.com/api/v1/affinityBonus', {
-      //     affinityBonus,
-      //     characterId
-      // });
 
       // Handle the successful creation of the character
       console.log("Creation successful");
@@ -114,10 +91,6 @@ const CharacterForm = () => {
       console.log(error);
       setMessage(error.response.data.msg);
     }
-
-    // setName("");
-    // setElement("");
-    // setAffinity('');
   };
 
   return (
@@ -137,6 +110,7 @@ const CharacterForm = () => {
           <Label for="">Affinity</Label>
           <Dropdown
             options={affinitySelect}
+            value="Light"
             onChange={(e) => setAffinity(e.target.value)}
           />
         </FormGroup>
@@ -163,7 +137,7 @@ const CharacterForm = () => {
           <Label for="">Description</Label>
           <Input type="text" onChange={(e) => setDescription(e.target.value)} />
         </FormGroup>
-        <SubmitButton />
+        <SubmitButton characterData={valid} />
         <div>
           <p>{message}</p>
         </div>

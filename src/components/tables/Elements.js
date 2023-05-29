@@ -21,7 +21,7 @@ const Elements = () => {
     const fetchElements = async () => {
       try {
         const res = await axios.get(
-          "https://smitde5-rest-api.onrender.com/api/v1/elements?sortBy=id&page=1"
+          "https://smitde5-rest-api.onrender.com/api/v1/elements?sortBy=id&sortOrder=desc"
         );
         setData(res.data.data);
       } catch (err) {

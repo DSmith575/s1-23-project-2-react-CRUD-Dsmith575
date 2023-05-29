@@ -1,5 +1,5 @@
 import "./App.css";
-import Navigation from "./components/navigation";
+import Navigation from "./components/Navigation";
 
 const App = () => {
   return (
