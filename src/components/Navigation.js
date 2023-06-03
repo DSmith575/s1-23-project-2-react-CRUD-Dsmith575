@@ -14,6 +14,7 @@ import { useState } from "react";
 import CreateCharacter from "./form/createCharacterForm.js";
 import Characters from "./tables/character.js";
 import Elements from "./tables/elements.js";
+import Rarities from "./tables/rarity.js";
 
 // Import the following:
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -49,6 +50,9 @@ const Navigation = () => {
             <NavItem>
               <NavLink href="/elements">Element</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink href="/rarities">Rarities</NavLink>
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
@@ -56,6 +60,7 @@ const Navigation = () => {
         <Route path="/create" element={<CreateCharacter />} />
         <Route path="/characters" element={<Characters />} />
         <Route path="/elements" element={<Elements />} />
+        <Route path="/rarities" element={<Rarities />} />
       </Routes>
     </Router>
   );

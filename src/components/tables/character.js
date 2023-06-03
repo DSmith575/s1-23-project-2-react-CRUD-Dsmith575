@@ -14,7 +14,7 @@ import { Table } from "reactstrap";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const Post = () => {
+const Characters = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -58,4 +58,4 @@ const Post = () => {
     </Table>
   );
 };
-export default Post;
+export default Characters;

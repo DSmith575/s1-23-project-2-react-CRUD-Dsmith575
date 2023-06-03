@@ -19,6 +19,7 @@ import FormTextInput from "../common/form/formTextInput.js";
 
 import { affinitySelect } from "../../data/affinitySelect.js";
 import { elementSelection } from "../../data/elementSelection.js";
+import { raritySelection } from "../../data/raritySelection.js";
 
 const CharacterForm = () => {
   const [message, setMessage] = useState("");
@@ -45,13 +46,6 @@ const CharacterForm = () => {
     setRarity("");
     setClassName("");
   };
-
-  const raritySelection = [
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 4, label: 4 },
-    { value: 5, label: 5 },
-  ];
 
   //dataObj fields for POST
   const characterData = {
