@@ -44,13 +44,13 @@ js REACT_APP_API_URL=https://smitde5-rest-api.onrender.com/api/v1/
 
 ## Packages Used
 
-- NodeJS
-- Axios
-- Bootstrap
-- ReactStrap
-- React-router
-- Commitizen
-- Prettier
+- [NodeJs](https://nodejs.org/en)
+- [Axios](https://axios-http.com/docs/intro)
+- [BootStrap](https://getbootstrap.com/)
+- [ReactStrap](https://reactstrap.github.io/?path=/docs/home-installation--page)
+- [ReactRouter](https://reactrouter.com/en/main)
+- [Commitizen](https://www.npmjs.com/package/commitizen)
+- [Prettier](https://www.npmjs.com/package/prettier)
 
 <!-- TOC --><a name="references"></a>
 
