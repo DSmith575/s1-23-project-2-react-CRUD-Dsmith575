@@ -7,17 +7,16 @@
  * @version: 1.0.0
  * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
  * @created: 2023-05-27
- * @updated: 2023-05-28
+ * @updated: 2023-06-03
  */
 
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const ApiPost = async (endPoint, formData) => {
   try {
-    const response = await axios.post(
-      `https://smitde5-rest-api.onrender.com/api/v1/${endPoint}`,
-      formData
-    );
+    const response = await axios.post(`${API_URL}${endPoint}`, formData);
     return response;
   } catch (error) {
     throw error;

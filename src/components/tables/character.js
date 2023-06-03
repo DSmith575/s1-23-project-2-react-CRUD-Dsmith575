@@ -14,14 +14,14 @@ import { Table } from "reactstrap";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Characters = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id&sortOrder=desc`
-        );
+        const res = await axios.get(`${API_URL}characters?sortBy=id&sortOrder=desc`);
         setData(res.data.data);
       } catch (err) {
         console.log(err);
