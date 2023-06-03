@@ -27,8 +27,8 @@
 #### .env.development
 
 Add the following to your .env
-```
-js REACT_APP_API_URL=https://smitde5-rest-api.onrender.com/api/v1/
+```js
+REACT_APP_API_URL=https://smitde5-rest-api.onrender.com/api/v1/
 ``` 
 
 
