@@ -11,9 +11,9 @@
  */
 
 import { useState } from "react";
+import CreateCharacter from "./form/createCharacterForm.js";
 import Characters from "./tables/character.js";
-import CharacterForm from "./form/createCharacterForm.js";
-import Elements from "./tables/Elements.js";
+import Elements from "./tables/elements.js";
 
 // Import the following:
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -53,7 +53,7 @@ const Navigation = () => {
         </Collapse>
       </Navbar>
       <Routes>
-        <Route path="/create" element={<CharacterForm />} />
+        <Route path="/create" element={<CreateCharacter />} />
         <Route path="/characters" element={<Characters />} />
         <Route path="/elements" element={<Elements />} />
       </Routes>

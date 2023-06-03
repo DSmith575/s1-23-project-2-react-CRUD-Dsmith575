@@ -14,8 +14,6 @@ import { Table } from "reactstrap";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-import Pagination from "reactstrap";
-
 const Post = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -25,7 +23,6 @@ const Post = () => {
           `https://smitde5-rest-api.onrender.com/api/v1/characters?sortBy=id&sortOrder=desc`
         );
         setData(res.data.data);
-        // console.log(data);
       } catch (err) {
         console.log(err);
       }
@@ -39,6 +36,8 @@ const Post = () => {
           <th>ID</th>
           <th>Name</th>
           <th>Element</th>
+          <th>Rarity</th>
+          <th>Class Name</th>
           <th>Affinity</th>
           <th>Description</th>
         </tr>
@@ -49,6 +48,8 @@ const Post = () => {
             <td>{d.id}</td>
             <td>{d.name}</td>
             <td>{d.element.map((e) => e.element)}</td>
+            <td>{d.rarity.map((e) => e.rarity)}</td>
+            <td>{d.rarity.map((e) => e.className)}</td>
             <td>{d.affinity}</td>
             <td>{d.description}</td>
           </tr>

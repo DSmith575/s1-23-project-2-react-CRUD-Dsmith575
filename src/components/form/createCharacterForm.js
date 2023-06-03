@@ -1,7 +1,7 @@
 /**
  * Create character form data
  *
- * Component handles Create Form Requests
+ * Component handles POST Form Requests
  *
  * @file: createCharacterForm.js
  * @version: 1.0.0
@@ -11,41 +11,49 @@
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import { Form, FormGroup, Input, Label } from "reactstrap";
-import ApiPost from "../services/apiCreate";
-import SubmitButton from "./submitButton";
-import FormDropDown from "./formDropDown";
+import { Form, FormText } from "reactstrap";
+import ApiPost from "../services/apiCreate.js";
+import SubmitButton from "../common/form/submitButton.js";
+import FormDropDown from "../common/form/formDropDown.js";
+import FormTextInput from "../common/form/formTextInput.js";
 
-const affinitySelect = [
-  { value: "Light", label: "Light" },
-  { value: "Shadow", label: "Shadow" },
-];
-
-const elementSelection = [
-  { value: "None", label: "None" },
-  { value: "Fire", label: "Fire" },
-  { value: "Water", label: "Water" },
-  { value: "Earth", label: "Earth" },
-  { value: "Wind", label: "Wind" },
-  { value: "Thunder", label: "Thunder" },
-  { value: "Shade", label: "Shade" },
-  { value: "Crystal", label: "Crystal" },
-];
+import { affinitySelect } from "../../data/affinitySelect.js";
+import { elementSelection } from "../../data/elementSelection.js";
 
 const CharacterForm = () => {
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [affinity, setAffinity] = useState("");
   const [description, setDescription] = useState("");
-  // const [rarity, setRarity] = useState([]);
+  const [rarity, setRarity] = useState("");
+  const [className, setClassName] = useState("");
   const [element, setElement] = useState("");
   // const [personality, setPersonality] = useState("");
   // const [attributes, setAttributes] = useState(null);
-  let characterId;
-  //submit button validation
 
+  //Used to POST the rest of fields after character is posted
+  let characterId;
+
+  //submit button validation
   const [valid, setValid] = useState(false);
 
+  const resetForm = () => {
+    setName("");
+    setAffinity("");
+    setElement("");
+    setDescription("");
+    setRarity("");
+    setClassName("");
+  };
+
+  const raritySelection = [
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+    { value: 5, label: 5 },
+  ];
+
+  //dataObj fields for POST
   const characterData = {
     name,
     affinity,
@@ -57,18 +65,33 @@ const CharacterForm = () => {
     characterId,
   };
 
-  useEffect(() => {
-    console.log(affinity);
-  }, [affinity]);
+  const rarityData = {
+    rarity,
+    className,
+    characterId,
+  };
 
+  // TESTING EFFECT
+  useEffect(() => {
+    console.log(rarityData);
+  }, [name]);
+
+  // Validation: If length >0, field is considered to have a value inside it
   useEffect(() => {
     const isValid = validate();
     setValid(isValid);
-  }, [name, affinity, description, element]);
+  }, [name, affinity, description, element, rarity, className]);
 
   const validate = () => {
-    // return name.length && affinity.length && description.length
-    return name.length && affinity.length && description.length && element.length;
+    // length of values to validate if form is completed
+    return (
+      name.length &&
+      affinity.length &&
+      description.length &&
+      element.length &&
+      rarity.length &&
+      className.length
+    );
   };
 
   const HandleSubmit = async (event) => {
@@ -77,14 +100,12 @@ const CharacterForm = () => {
       const response = await ApiPost("characters", characterData);
       if (response.status === 201) {
         elementData.characterId = response.data.data.id;
+        rarityData.characterId = response.data.data.id;
         await ApiPost("elements", elementData);
+        await ApiPost("rarities", rarityData);
 
         setMessage(response.data.msg);
-
-        setName("");
-        setAffinity("");
-        setElement("");
-        setDescription("");
+        resetForm();
       }
 
       // Handle the successful creation of the character
@@ -99,14 +120,8 @@ const CharacterForm = () => {
     <div className="App">
       <h2 style={{ textAlign: "center" }}>Create Character</h2>
       <Form className="form" onSubmit={HandleSubmit}>
-        <FormGroup>
-          <Label for="">Name</Label>
-          <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </FormGroup>
+        {/* Name */}
+        <FormTextInput id={"Name"} value={name} inputType={"text"} set={setName} />
 
         {/* Affinity */}
         <FormDropDown
@@ -126,56 +141,32 @@ const CharacterForm = () => {
           formMap={elementSelection}
         />
 
-        {/* <FormGroup>
-          <Label for="affinityForm">Affinity</Label>
-          <Input
-            id="affinityForm"
-            type="select"
-            name="affSelect"
-            onChange={(e) => setAffinity(e.target.value)}
-            value={affinity}
-          >
-            <option value={""} disabled>
-              Select
-            </option>
-            {affinitySelect.map((affinity) => (
-              <option key={affinity.value} value={affinity.value}>
-                {affinity.label}
-              </option>
-            ))}
-          </Input>
-        </FormGroup> */}
+        {/* Rarity */}
+        <FormDropDown
+          id={"Rarity"}
+          value={rarity}
+          inputType="select"
+          set={setRarity}
+          formMap={raritySelection}
+        />
 
-        {/* <FormGroup>
-          <Label for="elementForm">Element</Label>
-          <Input
-            id="elementForm"
-            type="select"
-            name="eleSelect"
-            onChange={(e) => setElement(e.target.value)}
-            value={element}
-          >
-            <option value={""} disabled>
-              Select
-            </option>
-            {elementSelection.map((element) => (
-              <option key={element.value} value={element.value}>
-                {element.label}
-              </option>
-            ))}
-          </Input>
-        </FormGroup> */}
+        {/* Rarity Class name */}
 
-        <FormGroup>
-          <Label for="descripForm">Description</Label>
-          <Input
-            id="descripForm"
-            type="text"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </FormGroup>
+        <FormTextInput
+          id={"Class Name"}
+          value={className}
+          inputType={"text"}
+          set={setClassName}
+        />
+
+        {/* Description */}
+        <FormTextInput
+          id={"Description"}
+          value={description}
+          inputType={"text"}
+          set={setDescription}
+        />
+
         <SubmitButton characterData={valid} style={{}} />
         <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
           <p>{message}</p>

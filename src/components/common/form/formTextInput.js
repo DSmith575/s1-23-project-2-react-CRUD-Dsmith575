@@ -1,7 +1,19 @@
+/**
+ * Form text field
+ *
+ * Re-usable component for form text field
+ *
+ * @file: formTextInput.js
+ * @version: 1.0.0
+ * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
+ * @created: 2023-06-03
+ * @updated: 2023-06-03
+ */
+
 import React from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
-const FormDropDown = ({ id, value, inputType, set, formMap }) => {
+const FormTextInput = ({ id, value, inputType, set }) => {
   const handleChange = (e) => {
     set(e.target.value);
   };
@@ -15,18 +27,9 @@ const FormDropDown = ({ id, value, inputType, set, formMap }) => {
         name={`${id}Name`}
         onChange={handleChange}
         value={value}
-      >
-        <option value={""} disabled>
-          Select
-        </option>
-        {formMap.map((item) => (
-          <option key={item.value} value={item.value}>
-            {item.label}
-          </option>
-        ))}
-      </Input>
+      ></Input>
     </FormGroup>
   );
 };
 
-export default FormDropDown;
+export default FormTextInput;
