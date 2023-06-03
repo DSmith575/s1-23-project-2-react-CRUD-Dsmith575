@@ -7,11 +7,10 @@
  * @version: 1.0.0
  * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
  * @created: 2023-04-22
- * @updated: 2023-05-29
+ * @updated: 2023-06-03
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import Dropdown from "./dropDownSelection";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import ApiPost from "../services/apiCreate";
 import SubmitButton from "./submitButton";
@@ -32,10 +31,8 @@ const elementSelection = [
   { value: "Crystal", label: "Crystal" },
 ];
 
-//TODO
-//Set if setElement works without render
-
 const CharacterForm = () => {
+  const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [affinity, setAffinity] = useState("");
   const [description, setDescription] = useState("");
@@ -43,9 +40,9 @@ const CharacterForm = () => {
   const [element, setElement] = useState("");
   // const [personality, setPersonality] = useState("");
   // const [attributes, setAttributes] = useState(null);
-
   let characterId;
   //submit button validation
+
   const [valid, setValid] = useState(false);
 
   const characterData = {
@@ -59,7 +56,9 @@ const CharacterForm = () => {
     characterId,
   };
 
-  const [message, setMessage] = useState("");
+  useEffect(() => {
+    console.log(element);
+  }, [name]);
 
   useEffect(() => {
     const isValid = validate();
@@ -82,7 +81,9 @@ const CharacterForm = () => {
         setMessage(response.data.msg);
 
         setName("");
-        setElement();
+        setAffinity("");
+        setElement("");
+        setDescription("");
       }
 
       // Handle the successful creation of the character
@@ -106,39 +107,58 @@ const CharacterForm = () => {
           />
         </FormGroup>
 
-        <FormGroup style={{}}>
-          <Label for="">Affinity</Label>
-          <Dropdown
-            options={affinitySelect}
-            value="Light"
+        <FormGroup>
+          <Label for="affinityForm">Affinity</Label>
+          <Input
+            id="affinityForm"
+            type="select"
+            name="affSelect"
             onChange={(e) => setAffinity(e.target.value)}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label for="">Element</Label>
-          <Dropdown
-            options={elementSelection}
-            onChange={(e) => setElement(e.target.value)}
-          />
-        </FormGroup>
-
-        {/* <FormGroup>
-          <Label>Element</Label>
-          <Input type="select">
-            <DropDown
-              options={elementSelection}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+            value={affinity}
+          >
+            <option value={""} disabled>
+              Select
+            </option>
+            {affinitySelect.map((affinity) => (
+              <option key={affinity.value} value={affinity.value}>
+                {affinity.label}
+              </option>
+            ))}
           </Input>
-        </FormGroup> */}
+        </FormGroup>
 
         <FormGroup>
-          <Label for="">Description</Label>
-          <Input type="text" onChange={(e) => setDescription(e.target.value)} />
+          <Label for="elementForm">Element</Label>
+          <Input
+            id="elementForm"
+            type="select"
+            name="eleSelect"
+            onChange={(e) => setElement(e.target.value)}
+            value={element}
+          >
+            <option value={""} disabled>
+              Select
+            </option>
+            {elementSelection.map((element) => (
+              <option key={element.value} value={element.value}>
+                {element.label}
+              </option>
+            ))}
+          </Input>
         </FormGroup>
-        <SubmitButton characterData={valid} />
-        <div>
+
+        <FormGroup>
+          <Label for="descripForm">Description</Label>
+          <Input
+            id="descripForm"
+            type="text"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </FormGroup>
+        <SubmitButton characterData={valid} style={{}} />
+        <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
           <p>{message}</p>
         </div>
       </Form>
