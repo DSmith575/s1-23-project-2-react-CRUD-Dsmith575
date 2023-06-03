@@ -14,6 +14,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import ApiPost from "../services/apiCreate";
 import SubmitButton from "./submitButton";
+import FormDropDown from "./formDropDown";
 
 const affinitySelect = [
   { value: "Light", label: "Light" },
@@ -57,8 +58,8 @@ const CharacterForm = () => {
   };
 
   useEffect(() => {
-    console.log(element);
-  }, [name]);
+    console.log(affinity);
+  }, [affinity]);
 
   useEffect(() => {
     const isValid = validate();
@@ -107,7 +108,25 @@ const CharacterForm = () => {
           />
         </FormGroup>
 
-        <FormGroup>
+        {/* Affinity */}
+        <FormDropDown
+          id={"Affinity"}
+          value={affinity}
+          inputType={"select"}
+          set={setAffinity}
+          formMap={affinitySelect}
+        />
+
+        {/* Element */}
+        <FormDropDown
+          id={"Element"}
+          value={element}
+          inputType="select"
+          set={setElement}
+          formMap={elementSelection}
+        />
+
+        {/* <FormGroup>
           <Label for="affinityForm">Affinity</Label>
           <Input
             id="affinityForm"
@@ -125,9 +144,9 @@ const CharacterForm = () => {
               </option>
             ))}
           </Input>
-        </FormGroup>
+        </FormGroup> */}
 
-        <FormGroup>
+        {/* <FormGroup>
           <Label for="elementForm">Element</Label>
           <Input
             id="elementForm"
@@ -145,7 +164,7 @@ const CharacterForm = () => {
               </option>
             ))}
           </Input>
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup>
           <Label for="descripForm">Description</Label>
