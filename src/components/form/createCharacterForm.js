@@ -11,7 +11,7 @@
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import { Form, FormText } from "reactstrap";
+import { Form } from "reactstrap";
 import ApiPost from "../services/apiCreate.js";
 import SubmitButton from "../common/form/submitButton.js";
 import FormDropDown from "../common/form/formDropDown.js";

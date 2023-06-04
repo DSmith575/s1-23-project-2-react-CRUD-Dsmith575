@@ -1,4 +1,4 @@
-# Project-2 React CRUD  
+# Project-2 React CRUD
 
 ## Table of Contents
 
@@ -11,15 +11,16 @@
   - [References](#references)
 
 <!-- TOC --><a name="installation"></a>
+
 ## Installation
 
-- Clone the [repository](https://github.com/otago-polytechnic-bit-courses/s1-23-id607001-project-2-DSmith575)  
+- Clone the [repository](https://github.com/otago-polytechnic-bit-courses/s1-23-id607001-project-2-DSmith575)
 - `git clone https://github.com/otago-polytechnic-bit-courses/s1-23-id607001-project-2-DSmith575.git`
 
 <!-- TOC --><a name="initial-setup"></a>
 
-- Run `npm install` to install all dependencies  
-- Create a .env || .env.development file in the root directory  
+- Run `npm install` to install all dependencies
+- Create a .env || .env.development file in the root directory
 - Save if auto-save isn't turned on
 
 <!-- TOC --><a name="envdevelopment"></a>
@@ -27,14 +28,14 @@
 #### .env.development
 
 Add the following to your .env
+
 ```js
 REACT_APP_API_URL=https://smitde5-rest-api.onrender.com/api/v1/
-``` 
-
+```
 
 <!-- TOC --><a name="script-commands"></a>
 
-## Script commands  
+## Script commands
 
 `npm start` Run app in dev environment
 `npm run format` Run prettier format
