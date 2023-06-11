@@ -31,6 +31,9 @@ const CharacterUpdateForm = () => {
   // load that character data into default values of form
   const [allData, setAllData] = useState([]);
   const [id, setId] = useState(null);
+
+  let selectedChar;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,6 +67,11 @@ const CharacterUpdateForm = () => {
     value: item.id,
     label: item.name,
   }));
+
+  useEffect(() => {
+    selectedChar = allData[id];
+  }, [id]);
+
   // const [message, setMessage] = useState("");
   // const [name, setName] = useState("");
   // const [affinity, setAffinity] = useState("");
@@ -130,27 +138,16 @@ const CharacterUpdateForm = () => {
       <h2 style={{ textAlign: "center" }}> Update Character</h2>
       <Form className="form" onSubmit={""}>
         <FormDropDown
-          id={"updateSelection"}
-          value={id}
+          style={{ maxHeight: "200px" }}
+          id={"Character List"}
+          value={id || ""}
           inputType={"select"}
           set={setId}
           formMap={mapAllData}
         />
-        {/* Name */}
-        {/* <FormTextInput id={"Name"} value={name} inputType={"text"} set={setName} /> */}
-
-        {/* <SubmitButton characterData={valid} style={{}} /> */}
-        {/* <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
-          <p>{message}</p>
-        </div> */}
+        {console.log(id)}
       </Form>
-      {console.log(id)}
     </div>
-    // <div>
-    //     {allData.map((item) => (
-    //         <p key={item.id}>{item.name}</p>
-    //     ))}
-    // </div>
   );
 };
 
