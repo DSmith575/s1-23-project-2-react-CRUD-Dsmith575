@@ -57,7 +57,7 @@ const Characters = () => {
       </tbody>
     </Table>
   ) : (
-    <h2>Who is deez?</h2>
+    <h2>No Data</h2>
   );
 };
 export default Characters;

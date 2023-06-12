@@ -30,7 +30,7 @@ const Elements = () => {
     };
     fetchElements();
   }, []);
-  return (
+  return data && data.length > 0 ? (
     <Table hover bordered>
       <thead>
         <tr>
@@ -49,6 +49,8 @@ const Elements = () => {
         ))}
       </tbody>
     </Table>
+  ) : (
+    <h2>No Data</h2>
   );
 };
 
