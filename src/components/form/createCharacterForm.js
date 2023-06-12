@@ -10,7 +10,7 @@
  * @updated: 2023-06-13
  */
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "reactstrap";
 import ApiPost from "../services/apiCreate.js";
 import SubmitButton from "../common/form/submitButton.js";
@@ -35,7 +35,7 @@ const CharacterForm = () => {
   //Used to POST the rest of fields after character is posted
   let characterId;
 
-  //submit button validation
+  //submit button validation, submit button greyed out till all fields are filled in
   const [valid, setValid] = useState(false);
 
   const resetForm = () => {
@@ -64,11 +64,6 @@ const CharacterForm = () => {
     className,
     characterId,
   };
-
-  // TESTING EFFECT
-  useEffect(() => {
-    console.log(characterData);
-  }, [name]);
 
   // Validation: If length >0, field is considered to have a value inside it
   useEffect(() => {
@@ -139,7 +134,7 @@ const CharacterForm = () => {
         <FormDropDown
           id={"Rarity"}
           value={rarity}
-          inputType="select"
+          inputType={"select"}
           set={setRarity}
           formMap={raritySelection}
         />

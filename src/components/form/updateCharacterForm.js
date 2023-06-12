@@ -10,7 +10,7 @@
  * @updated: 2023-06-13
  */
 
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Form } from "reactstrap";
 import SubmitButton from "../common/form/submitButton";
@@ -36,8 +36,6 @@ const CharacterUpdateForm = () => {
 
   const [message, setMessage] = useState("");
   const [valid, setValid] = useState(false);
-
-  let selectedChar;
 
   const characterData = {
     name,
@@ -99,12 +97,11 @@ const CharacterUpdateForm = () => {
   };
 
   useEffect(() => {
-    selectedChar = allData[characterId - 1]; //Need to start at 0 index
     if (characterId) {
-      characterForm(selectedChar);
+      const updatedSelectedChar = allData[characterId - 1];
+      characterForm(updatedSelectedChar);
     }
   }, [characterId]);
-
   useEffect(() => {
     const isValid = validate();
     setValid(isValid);
@@ -159,9 +156,9 @@ const CharacterUpdateForm = () => {
     setClassName("");
   };
 
-  useEffect(() => {
-    console.log(typeof elementData.characterId);
-  }, [name]);
+  // useEffect(() => {
+  //   console.log(typeof elementData.characterId);
+  // }, [name]);
 
   return (
     <div className="App">
@@ -210,7 +207,7 @@ const CharacterUpdateForm = () => {
             <FormDropDown
               id={"Rarity"}
               value={rarity}
-              inputType="select"
+              inputType={"select"}
               set={setRarity}
               formMap={raritySelection}
             />
