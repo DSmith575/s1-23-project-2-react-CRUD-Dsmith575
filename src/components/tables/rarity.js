@@ -52,7 +52,7 @@ const Rarities = () => {
       </tbody>
     </Table>
   ) : (
-    <h2>No Data</h2>
+    <h2 style={{ textAlign: "center" }}>NoData</h2>
   );
 };
 

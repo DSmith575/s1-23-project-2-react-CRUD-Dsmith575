@@ -29,6 +29,7 @@ const Characters = () => {
     };
     fetchData();
   }, []);
+
   return data && data.length > 0 ? (
     <Table hover bordered>
       <thead>
@@ -57,7 +58,7 @@ const Characters = () => {
       </tbody>
     </Table>
   ) : (
-    <h2>No Data</h2>
+    <h2 style={{ textAlign: "center" }}>NoData</h2>
   );
 };
 export default Characters;

@@ -30,6 +30,7 @@ const Elements = () => {
     };
     fetchElements();
   }, []);
+
   return data && data.length > 0 ? (
     <Table hover bordered>
       <thead>
@@ -50,7 +51,7 @@ const Elements = () => {
       </tbody>
     </Table>
   ) : (
-    <h2>No Data</h2>
+    <h2 style={{ textAlign: "center" }}>NoData</h2>
   );
 };
 

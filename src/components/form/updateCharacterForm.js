@@ -32,7 +32,7 @@ const CharacterUpdateForm = () => {
   // once option has been picked
   // load that character data into default values of form
   const [allData, setAllData] = useState([]);
-  const [id, setId] = useState(null);
+  const [characterId, setCharacterId] = useState(null);
   const [name, setName] = useState("");
   const [affinity, setAffinity] = useState("");
   const [description, setDescription] = useState("");
@@ -53,13 +53,13 @@ const CharacterUpdateForm = () => {
 
   const elementData = {
     element,
-    id,
+    characterId,
   };
 
   const rarityData = {
     rarity,
     className,
-    id,
+    characterId,
   };
 
   useEffect(() => {
@@ -92,10 +92,9 @@ const CharacterUpdateForm = () => {
   }, []);
 
   const mapAllData = allData.map((item) => ({
-    value: item.id,
-    label: item.name,
+    value: item?.id || "",
+    label: item?.name || "",
   }));
-
   const characterForm = (character) => {
     setName(character.name);
     setAffinity(character.affinity);
@@ -106,15 +105,11 @@ const CharacterUpdateForm = () => {
   };
 
   useEffect(() => {
-    selectedChar = allData[id - 1]; //Need to start at 0 index
-    if (id) {
+    selectedChar = allData[characterId - 1]; //Need to start at 0 index
+    if (characterId) {
       characterForm(selectedChar);
     }
-  }, [id]);
-
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
+  }, [characterId]);
 
   useEffect(() => {
     const isValid = validate();
@@ -129,7 +124,9 @@ const CharacterUpdateForm = () => {
       description.length &&
       element.length &&
       rarity.length &&
-      className.length
+      className.length &&
+      // CHECK THISVVVVVVVVVVVVVVV
+      characterId > 0
     );
   };
 
@@ -138,14 +135,14 @@ const CharacterUpdateForm = () => {
     console.log(characterData);
     console.log(rarityData);
     console.log(elementData);
+
     try {
-      const response = await ApiPut("characters", characterData, id);
+      const response = await ApiPut("characters", characterData, characterId);
       console.log(response);
       if (response.status === 200) {
-        console.log(id);
-        await ApiPut("elements", elementData, id);
-        await ApiPut("rarities", rarityData, id);
-
+        await ApiPut("elements", elementData, characterId);
+        await ApiPut("rarities", rarityData, characterId);
+        console.log(response.data.msg);
         setMessage(response.data.data.msg);
         resetForm();
       }
@@ -167,72 +164,89 @@ const CharacterUpdateForm = () => {
     setClassName("");
   };
 
+  useEffect(() => {
+    console.log(allData);
+  }, [name]);
+
   return (
     <div className="App">
-      <h2 style={{ textAlign: "center" }}> Update Character</h2>
-      <Form className="form">
-        <FormDropDown
-          style={{ maxHeight: "200px" }}
-          id={"Character List"}
-          value={id || ""}
-          inputType={"select"}
-          set={setId}
-          formMap={mapAllData}
-        />
-      </Form>
+      {allData.length > 0 ? (
+        <>
+          <h2 style={{ textAlign: "center" }}> Update Character</h2>
+          <Form className="form">
+            <FormDropDown
+              style={{ maxHeight: "200px" }}
+              id={"Character List"}
+              value={characterId || ""}
+              inputType={"select"}
+              set={setCharacterId}
+              formMap={mapAllData}
+            />
+          </Form>
 
-      <Form className="form" onSubmit={HandleSubmit}>
-        {/* Name */}
-        <FormTextInput id={"Name"} value={name} inputType={"text"} set={setName} />
+          <Form className="form" onSubmit={HandleSubmit}>
+            {/* Name */}
+            <FormTextInput
+              id={"Name"}
+              value={name}
+              inputType={"text"}
+              set={setName}
+            />
 
-        {/* Affinity */}
-        <FormDropDown
-          id={"Affinity"}
-          value={affinity}
-          inputType={"select"}
-          set={setAffinity}
-          formMap={affinitySelect}
-        />
+            {/* Affinity */}
+            <FormDropDown
+              id={"Affinity"}
+              value={affinity}
+              inputType={"select"}
+              set={setAffinity}
+              formMap={affinitySelect}
+            />
 
-        {/* Element */}
-        <FormDropDown
-          id={"Element"}
-          value={element}
-          inputType={"select"}
-          set={setElement}
-          formMap={elementSelection}
-        />
+            {/* Element */}
+            <FormDropDown
+              id={"Element"}
+              value={element}
+              inputType={"select"}
+              set={setElement}
+              formMap={elementSelection}
+            />
 
-        {/* Rarity */}
-        <FormDropDown
-          id={"Rarity"}
-          value={rarity}
-          inputType="select"
-          set={setRarity}
-          formMap={raritySelection}
-        />
+            {/* Rarity */}
+            <FormDropDown
+              id={"Rarity"}
+              value={rarity}
+              inputType="select"
+              set={setRarity}
+              formMap={raritySelection}
+            />
 
-        {/* Rarity Class name */}
-        <FormTextInput
-          id={"Class Name"}
-          value={className}
-          inputType={"text"}
-          set={setClassName}
-        />
+            {/* Rarity Class name */}
+            <FormTextInput
+              id={"Class Name"}
+              value={className}
+              inputType={"text"}
+              set={setClassName}
+            />
 
-        {/* Description */}
-        <FormTextInput
-          id={"Description"}
-          value={description}
-          inputType={"text"}
-          set={setDescription}
-        />
+            {/* Description */}
+            <FormTextInput
+              id={"Description"}
+              value={description}
+              inputType={"text"}
+              set={setDescription}
+            />
 
-        <SubmitButton characterData={valid} style={{}} />
-        <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
-          <p>{message}</p>
-        </div>
-      </Form>
+            <SubmitButton characterData={valid} style={{}} />
+            <div
+              style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}
+            >
+              <p>{message}</p>
+            </div>
+          </Form>
+        </>
+      ) : (
+        <h2 style={{ textAlign: "center" }}>NoData</h2>
+      )}
     </div>
   );
 };

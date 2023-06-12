@@ -17,7 +17,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const ApiPut = async (endPoint, formData, characterId) => {
   try {
     const response = await axios.put(
-      `${API_URL}${endPoint}/${characterId}`,
+      `${API_URL}${endPoint}/${parseInt(characterId)}`,
       formData
     );
     return response;
