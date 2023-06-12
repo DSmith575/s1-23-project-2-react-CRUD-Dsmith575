@@ -7,7 +7,7 @@
  * @version: 1.0.0
  * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
  * @created: 2023-04-22
- * @updated: 2023-06-03
+ * @updated: 2023-06-13
  */
 
 import { React, useState, useEffect } from "react";
@@ -21,16 +21,10 @@ import ApiPut from "../services/apiUpdate";
 import { affinitySelect } from "../../data/affinitySelect";
 import { elementSelection } from "../../data/elementSelection";
 import { raritySelection } from "../../data/raritySelection";
-import { FormText } from "reactstrap";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const CharacterUpdateForm = () => {
-  // On loading /update
-  // call api and get id and names
-  // map names to dropdown
-  // once option has been picked
-  // load that character data into default values of form
   const [allData, setAllData] = useState([]);
   const [characterId, setCharacterId] = useState(null);
   const [name, setName] = useState("");
@@ -52,13 +46,13 @@ const CharacterUpdateForm = () => {
   };
 
   const elementData = {
-    element,
-    characterId,
+    element: element.toString(), //Converting to string for put request
+    characterId: characterId,
   };
 
   const rarityData = {
-    rarity,
-    className,
+    rarity: parseInt(rarity), //Converting to int for put request
+    className: className.toString(), //converting to string for put requet
     characterId,
   };
 
@@ -140,6 +134,7 @@ const CharacterUpdateForm = () => {
       const response = await ApiPut("characters", characterData, characterId);
       console.log(response);
       if (response.status === 200) {
+        console.log(elementData.element);
         await ApiPut("elements", elementData, characterId);
         await ApiPut("rarities", rarityData, characterId);
         console.log(response.data.msg);
@@ -165,7 +160,7 @@ const CharacterUpdateForm = () => {
   };
 
   useEffect(() => {
-    console.log(allData);
+    console.log(typeof elementData.characterId);
   }, [name]);
 
   return (

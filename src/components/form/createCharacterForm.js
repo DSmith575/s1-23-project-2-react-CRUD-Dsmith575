@@ -7,7 +7,7 @@
  * @version: 1.0.0
  * @author: Deacon Smith <SMITDE5@student.op.ac.nz>
  * @created: 2023-04-22
- * @updated: 2023-06-03
+ * @updated: 2023-06-13
  */
 
 import React, { useEffect, useState, useRef } from "react";
@@ -67,7 +67,7 @@ const CharacterForm = () => {
 
   // TESTING EFFECT
   useEffect(() => {
-    console.log(rarityData);
+    console.log(characterData);
   }, [name]);
 
   // Validation: If length >0, field is considered to have a value inside it
