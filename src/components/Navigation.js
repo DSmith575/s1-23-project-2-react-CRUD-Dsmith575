@@ -14,7 +14,7 @@ import { useState } from "react";
 import CreateCharacter from "./form/createCharacterForm.js";
 import CharacterUpdateForm from "./form/updateCharacterForm.js";
 import Characters from "./tables/character.js";
-import Elements from "./tables/elements.js";
+import Elements from "./tables/Elements.js";
 import Rarities from "./tables/rarity.js";
 
 // Import the following:

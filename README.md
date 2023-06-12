@@ -15,9 +15,10 @@
 ## Installation
 
 - Clone the [repository](https://github.com/otago-polytechnic-bit-courses/s1-23-id607001-project-2-DSmith575)
- ```
+
+```
 git clone https://github.com/otago-polytechnic-bit-courses/s1-23-id607001-project-2-DSmith575.git
- ```
+```
 
 <!-- TOC --><a name="initial-setup"></a>
 

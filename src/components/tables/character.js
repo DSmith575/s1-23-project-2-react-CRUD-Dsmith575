@@ -29,7 +29,7 @@ const Characters = () => {
     };
     fetchData();
   }, []);
-  return (
+  return data && data.length > 0 ? (
     <Table hover bordered>
       <thead>
         <tr>
@@ -56,6 +56,8 @@ const Characters = () => {
         ))}
       </tbody>
     </Table>
+  ) : (
+    <h2>Who is deez?</h2>
   );
 };
 export default Characters;

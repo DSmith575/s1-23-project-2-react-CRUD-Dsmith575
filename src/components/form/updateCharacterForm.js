@@ -16,10 +16,12 @@ import { Form } from "reactstrap";
 import SubmitButton from "../common/form/submitButton";
 import FormDropDown from "../common/form/formDropDown";
 import FormTextInput from "../common/form/formTextInput";
+import ApiPut from "../services/apiUpdate";
 
 import { affinitySelect } from "../../data/affinitySelect";
 import { elementSelection } from "../../data/elementSelection";
 import { raritySelection } from "../../data/raritySelection";
+import { FormText } from "reactstrap";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -31,8 +33,34 @@ const CharacterUpdateForm = () => {
   // load that character data into default values of form
   const [allData, setAllData] = useState([]);
   const [id, setId] = useState(null);
+  const [name, setName] = useState("");
+  const [affinity, setAffinity] = useState("");
+  const [description, setDescription] = useState("");
+  const [rarity, setRarity] = useState("");
+  const [className, setClassName] = useState("");
+  const [element, setElement] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [valid, setValid] = useState(false);
 
   let selectedChar;
+
+  const characterData = {
+    name,
+    affinity,
+    description,
+  };
+
+  const elementData = {
+    element,
+    id,
+  };
+
+  const rarityData = {
+    rarity,
+    className,
+    id,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,75 +96,81 @@ const CharacterUpdateForm = () => {
     label: item.name,
   }));
 
+  const characterForm = (character) => {
+    setName(character.name);
+    setAffinity(character.affinity);
+    setDescription(character.description);
+    setElement(character.element.map((e) => e.element));
+    setRarity(character.rarity.map((e) => e.rarity));
+    setClassName(character.rarity.map((e) => e.className));
+  };
+
   useEffect(() => {
-    selectedChar = allData[id];
+    selectedChar = allData[id - 1]; //Need to start at 0 index
+    if (id) {
+      characterForm(selectedChar);
+    }
   }, [id]);
 
-  // const [message, setMessage] = useState("");
-  // const [name, setName] = useState("");
-  // const [affinity, setAffinity] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [rarity, setRarity] = useState("");
-  // const [className, setClassName] = useState("");
-  // const [element, setElement] = useState("");
+  useEffect(() => {
+    console.log(name);
+  }, [name]);
 
-  // let characterId;
+  useEffect(() => {
+    const isValid = validate();
+    setValid(isValid);
+  }, [name, affinity, description, element, rarity, className]);
 
-  // const [valid, setValid] = useState(false);
+  const validate = () => {
+    // length of values to validate if form is completed
+    return (
+      name.length &&
+      affinity.length &&
+      description.length &&
+      element.length &&
+      rarity.length &&
+      className.length
+    );
+  };
 
-  // const resetForm = () => {
-  //     setName("");
-  //     setAffinity("");
-  //     setElement("");
-  //     setDescription("");
-  //     setRarity("");
-  //     setClassName("");
-  //   };
+  const HandleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(characterData);
+    console.log(rarityData);
+    console.log(elementData);
+    try {
+      const response = await ApiPut("characters", characterData, id);
+      console.log(response);
+      if (response.status === 200) {
+        console.log(id);
+        await ApiPut("elements", elementData, id);
+        await ApiPut("rarities", rarityData, id);
 
-  //   const characterData = {
-  //     name,
-  //     affinity,
-  //     description,
-  //   };
+        setMessage(response.data.data.msg);
+        resetForm();
+      }
 
-  //   const elementData = {
-  //     element,
-  //     characterId,
-  //   };
+      // Handle the successful creation of the character
+      console.log("Creation successful");
+    } catch (error) {
+      console.log(error);
+      setMessage(error.response.data.msg);
+    }
+  };
 
-  //   const rarityData = {
-  //     rarity,
-  //     className,
-  //     characterId,
-  //   };
-
-  //Testing
-  //   useEffect(() => {
-  //     console.log();
-  //   }, []);
-
-  // Validation: If length >0, field is considered to have a value inside it
-  //   useEffect(() => {
-  //     const isValid = validate();
-  //     setValid(isValid);
-  //   }, [name, affinity, description, element, rarity, className]);
-
-  //   const validate = () => {
-  // length of values to validate if form is completed
-  //     return (
-  //       name.length &&
-  //       affinity.length &&
-  //       description.length &&
-  //       element.length &&
-  //       rarity.length &&
-  //       className.length
-  //     );
-  //   };
+  const resetForm = () => {
+    setName("");
+    setAffinity("");
+    setElement("");
+    setDescription("");
+    setRarity("");
+    setClassName("");
+  };
 
   return (
     <div className="App">
       <h2 style={{ textAlign: "center" }}> Update Character</h2>
-      <Form className="form" onSubmit={""}>
+      <Form className="form">
         <FormDropDown
           style={{ maxHeight: "200px" }}
           id={"Character List"}
@@ -145,7 +179,59 @@ const CharacterUpdateForm = () => {
           set={setId}
           formMap={mapAllData}
         />
-        {console.log(id)}
+      </Form>
+
+      <Form className="form" onSubmit={HandleSubmit}>
+        {/* Name */}
+        <FormTextInput id={"Name"} value={name} inputType={"text"} set={setName} />
+
+        {/* Affinity */}
+        <FormDropDown
+          id={"Affinity"}
+          value={affinity}
+          inputType={"select"}
+          set={setAffinity}
+          formMap={affinitySelect}
+        />
+
+        {/* Element */}
+        <FormDropDown
+          id={"Element"}
+          value={element}
+          inputType={"select"}
+          set={setElement}
+          formMap={elementSelection}
+        />
+
+        {/* Rarity */}
+        <FormDropDown
+          id={"Rarity"}
+          value={rarity}
+          inputType="select"
+          set={setRarity}
+          formMap={raritySelection}
+        />
+
+        {/* Rarity Class name */}
+        <FormTextInput
+          id={"Class Name"}
+          value={className}
+          inputType={"text"}
+          set={setClassName}
+        />
+
+        {/* Description */}
+        <FormTextInput
+          id={"Description"}
+          value={description}
+          inputType={"text"}
+          set={setDescription}
+        />
+
+        <SubmitButton characterData={valid} style={{}} />
+        <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
+          <p>{message}</p>
+        </div>
       </Form>
     </div>
   );
