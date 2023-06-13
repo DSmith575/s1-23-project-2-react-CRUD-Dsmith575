@@ -13,7 +13,7 @@
 import React from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
-const FormTextInput = ({ id, value, inputType, set }) => {
+const FormTextInput = ({ id, value, inputType, set, disableOption }) => {
   const handleChange = (e) => {
     set(e.target.value);
   };
@@ -27,6 +27,7 @@ const FormTextInput = ({ id, value, inputType, set }) => {
         name={`${id}Name`}
         onChange={handleChange}
         value={value}
+        disabled={disableOption}
       ></Input>
     </FormGroup>
   );

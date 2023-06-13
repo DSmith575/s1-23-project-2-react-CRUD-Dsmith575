@@ -13,17 +13,17 @@
 
 import { Button } from "reactstrap";
 
-const SubmitButton = ({ characterData }) => {
+const SubmitButton = ({ characterData, buttonType }) => {
   if (characterData) {
     return (
       <Button type="submit" style={{ backgroundColor: "green" }}>
-        Submit
+        {buttonType}
       </Button>
     );
   } else {
     return (
       <Button type="submit" disabled={true}>
-        Submit
+        {buttonType}
       </Button>
     );
   }

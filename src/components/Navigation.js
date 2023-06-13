@@ -13,6 +13,7 @@
 import { useState } from "react";
 import CreateCharacter from "./form/createCharacterForm.js";
 import CharacterUpdateForm from "./form/updateCharacterForm.js";
+import CharacterDelete from "./form/deleteCharacterForm.js";
 import Characters from "./tables/character.js";
 import Elements from "./tables/Elements.js";
 import Rarities from "./tables/rarity.js";
@@ -49,6 +50,9 @@ const Navigation = () => {
               <NavLink href="/update">Update</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink href="/delete">Delete</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href="/characters">Characters</NavLink>
             </NavItem>
             <NavItem>
@@ -66,6 +70,7 @@ const Navigation = () => {
         <Route path="/elements" element={<Elements />} />
         <Route path="/rarities" element={<Rarities />} />
         <Route path="/update" element={<CharacterUpdateForm />} />
+        <Route path="/delete" element={<CharacterDelete />} />
       </Routes>
     </Router>
   );

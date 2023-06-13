@@ -156,7 +156,7 @@ const CharacterForm = () => {
           set={setDescription}
         />
 
-        <SubmitButton characterData={valid} style={{}} />
+        <SubmitButton characterData={valid} buttonType={"Create"} style={{}} />
         <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
           <p>{message}</p>
         </div>

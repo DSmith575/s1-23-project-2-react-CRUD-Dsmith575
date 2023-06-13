@@ -97,7 +97,7 @@ const CharacterUpdateForm = () => {
   };
 
   useEffect(() => {
-    if (characterId) {
+    if (characterId && allData.length > characterId) {
       const updatedSelectedChar = allData[characterId - 1];
       characterForm(updatedSelectedChar);
     }
@@ -135,7 +135,7 @@ const CharacterUpdateForm = () => {
         await ApiPut("elements", elementData, characterId);
         await ApiPut("rarities", rarityData, characterId);
         console.log(response.data.msg);
-        setMessage(response.data.data.msg);
+        setMessage(response.data.msg);
         resetForm();
       }
 
@@ -155,10 +155,6 @@ const CharacterUpdateForm = () => {
     setRarity("");
     setClassName("");
   };
-
-  // useEffect(() => {
-  //   console.log(typeof elementData.characterId);
-  // }, [name]);
 
   return (
     <div className="App">
@@ -228,7 +224,7 @@ const CharacterUpdateForm = () => {
               set={setDescription}
             />
 
-            <SubmitButton characterData={valid} style={{}} />
+            <SubmitButton characterData={valid} buttonType={"Update"} style={{}} />
             <div
               style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}
             >
