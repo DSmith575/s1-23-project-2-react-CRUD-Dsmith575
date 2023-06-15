@@ -2,11 +2,11 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 
 const App = () => {
-  return (
-    <>
-      <Navigation />
-    </>
-  );
+ return (
+  <>
+   <Navigation />
+  </>
+ );
 };
 
 export default App;

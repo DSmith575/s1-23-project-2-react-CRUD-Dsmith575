@@ -15,12 +15,12 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL;
 
 const ApiDelete = async (endPoint, characterId) => {
-  try {
-    const response = await axios.delete(`${API_URL}${endPoint}/${characterId}`);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+ try {
+  const response = await axios.delete(`${API_URL}${endPoint}/${characterId}`);
+  return response;
+ } catch (error) {
+  throw error;
+ }
 };
 
 export default ApiDelete;

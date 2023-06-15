@@ -22,58 +22,58 @@ import Rarities from "./tables/rarity.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
+ Collapse,
+ Navbar,
+ NavbarToggler,
+ NavbarBrand,
+ Nav,
+ NavItem,
+ NavLink,
 } from "reactstrap";
 
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+ const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = () => setIsOpen(!isOpen);
+ const toggle = () => setIsOpen(!isOpen);
 
-  return (
-    <Router>
-      <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">API</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto" navbar>
-            <NavItem>
-              <NavLink href="/create">Create</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/update">Update</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/delete">Delete</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/characters">Characters</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/elements">Element</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/rarities">Rarities</NavLink>
-            </NavItem>
-          </Nav>
-        </Collapse>
-      </Navbar>
-      <Routes>
-        <Route path="/create" element={<CreateCharacter />} />
-        <Route path="/characters" element={<Characters />} />
-        <Route path="/elements" element={<Elements />} />
-        <Route path="/rarities" element={<Rarities />} />
-        <Route path="/update" element={<CharacterUpdateForm />} />
-        <Route path="/delete" element={<CharacterDelete />} />
-      </Routes>
-    </Router>
-  );
+ return (
+  <Router>
+   <Navbar color="dark" dark expand="md">
+    <NavbarBrand href="/">API</NavbarBrand>
+    <NavbarToggler onClick={toggle} />
+    <Collapse isOpen={isOpen} navbar>
+     <Nav className="ms-auto" navbar>
+      <NavItem>
+       <NavLink href="/create">Create</NavLink>
+      </NavItem>
+      <NavItem>
+       <NavLink href="/update">Update</NavLink>
+      </NavItem>
+      <NavItem>
+       <NavLink href="/delete">Delete</NavLink>
+      </NavItem>
+      <NavItem>
+       <NavLink href="/characters">Characters</NavLink>
+      </NavItem>
+      <NavItem>
+       <NavLink href="/elements">Element</NavLink>
+      </NavItem>
+      <NavItem>
+       <NavLink href="/rarities">Rarities</NavLink>
+      </NavItem>
+     </Nav>
+    </Collapse>
+   </Navbar>
+   <Routes>
+    <Route path="/create" element={<CreateCharacter />} />
+    <Route path="/characters" element={<Characters />} />
+    <Route path="/elements" element={<Elements />} />
+    <Route path="/rarities" element={<Rarities />} />
+    <Route path="/update" element={<CharacterUpdateForm />} />
+    <Route path="/delete" element={<CharacterDelete />} />
+   </Routes>
+  </Router>
+ );
 };
 
 export default Navigation;

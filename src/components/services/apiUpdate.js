@@ -15,15 +15,13 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL;
 
 const ApiPut = async (endPoint, formData, characterId) => {
-  try {
-    const response = await axios.put(
-      `${API_URL}${endPoint}/${characterId}`,
-      formData
-    );
-    return response;
-  } catch (error) {
-    throw error;
-  }
+ try {
+  const response = await axios.put(`${API_URL}${endPoint}/${characterId}`, formData);
+
+  return response;
+ } catch (error) {
+  throw error;
+ }
 };
 
 export default ApiPut;
