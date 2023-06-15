@@ -10,7 +10,7 @@
  * @updated: 2023-06-13
  */
 
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "axios";
 import { Form } from "reactstrap";
 import SubmitButton from "../common/form/submitButton";
@@ -87,6 +87,7 @@ const CharacterUpdateForm = () => {
     value: item?.id || "",
     label: item?.name || "",
   }));
+
   const characterForm = (character) => {
     setName(character.name);
     setAffinity(character.affinity);
@@ -97,11 +98,22 @@ const CharacterUpdateForm = () => {
   };
 
   useEffect(() => {
-    if (characterId && allData.length > characterId) {
-      const updatedSelectedChar = allData[characterId - 1];
-      characterForm(updatedSelectedChar);
+    if (characterId) {
+      const selectedCharacter = mapAllData.find(
+        (item) => item.value === parseInt(characterId)
+      );
+      console.log(selectedCharacter);
+
+      if (selectedCharacter) {
+        const updatedSelectedChar = allData.find(
+          (item) => item.id === selectedCharacter.value
+        );
+        console.log(updatedSelectedChar);
+        characterForm(updatedSelectedChar);
+      }
     }
   }, [characterId]);
+
   useEffect(() => {
     const isValid = validate();
     setValid(isValid);
@@ -116,30 +128,21 @@ const CharacterUpdateForm = () => {
       element.length &&
       rarity.length &&
       className.length &&
-      // CHECK THISVVVVVVVVVVVVVVV
       characterId > 0
     );
   };
 
   const HandleSubmit = async (event) => {
     event.preventDefault();
-    console.log(characterData);
-    console.log(rarityData);
-    console.log(elementData);
 
     try {
       const response = await ApiPut("characters", characterData, characterId);
-      console.log(response);
       if (response.status === 200) {
-        console.log(elementData.element);
+        setMessage(response.data.msg);
         await ApiPut("elements", elementData, characterId);
         await ApiPut("rarities", rarityData, characterId);
-        console.log(response.data.msg);
-        setMessage(response.data.msg);
-        resetForm();
       }
-
-      // Handle the successful creation of the character
+      resetForm();
       console.log("Creation successful");
     } catch (error) {
       console.log(error);
@@ -154,6 +157,7 @@ const CharacterUpdateForm = () => {
     setDescription("");
     setRarity("");
     setClassName("");
+    setCharacterId(0);
   };
 
   return (
@@ -169,6 +173,7 @@ const CharacterUpdateForm = () => {
               inputType={"select"}
               set={setCharacterId}
               formMap={mapAllData}
+              buttonType={"Select"}
             />
           </Form>
 
@@ -179,6 +184,7 @@ const CharacterUpdateForm = () => {
               value={name}
               inputType={"text"}
               set={setName}
+              buttonType={"Select"}
             />
 
             {/* Affinity */}
@@ -188,6 +194,7 @@ const CharacterUpdateForm = () => {
               inputType={"select"}
               set={setAffinity}
               formMap={affinitySelect}
+              buttonType={"Select"}
             />
 
             {/* Element */}
@@ -197,6 +204,7 @@ const CharacterUpdateForm = () => {
               inputType={"select"}
               set={setElement}
               formMap={elementSelection}
+              buttonType={"Select"}
             />
 
             {/* Rarity */}
@@ -206,6 +214,7 @@ const CharacterUpdateForm = () => {
               inputType={"select"}
               set={setRarity}
               formMap={raritySelection}
+              buttonType={"Select"}
             />
 
             {/* Rarity Class name */}

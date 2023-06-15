@@ -13,7 +13,7 @@
 import React from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
-const FormDropDown = ({ id, value, inputType, set, formMap }) => {
+const FormDropDown = ({ id, value, inputType, set, formMap, buttonType }) => {
   const handleChange = (e) => {
     set(e.target.value);
   };
@@ -29,7 +29,7 @@ const FormDropDown = ({ id, value, inputType, set, formMap }) => {
         value={value}
       >
         <option value={""} disabled>
-          Select
+          {buttonType}
         </option>
         {formMap.map((item) => (
           <option key={item.value} value={item.value}>

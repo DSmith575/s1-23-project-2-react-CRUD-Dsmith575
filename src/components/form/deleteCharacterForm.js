@@ -65,11 +65,22 @@ const CharacterDelete = () => {
     setName(character.name);
   };
 
+  //Query through the mapAllData and check if value is === characterId
+  //Then if that succeeds, use that value for the selected ID
+  //This is to stop out of bounds erroring if there is only one piece of data left int the API
+  // Also stops out of bounds when using first attempt of allData[characterID -1] which worked when IDs were structured with no deletes
   useEffect(() => {
     if (characterId) {
-      const updatedSelectedChar = allData[characterId - 1];
-      characterForm(updatedSelectedChar);
-      console.log(characterId);
+      const selectedCharacter = mapAllData.find(
+        (item) => item.value === parseInt(characterId)
+      );
+
+      if (selectedCharacter) {
+        const updatedSelectedChar = allData.find(
+          (item) => item.id === selectedCharacter.value
+        );
+        characterForm(updatedSelectedChar);
+      }
     }
   }, [characterId]);
 
@@ -95,10 +106,10 @@ const CharacterDelete = () => {
 
         console.log(response);
         if (response.status === 200) {
+          setMessage(response.data.msg);
           await ApiDelete("elements", characterId);
           await ApiDelete("characters", characterId);
           console.log(response.data.msg);
-          setMessage(response.data.msg);
         }
       } catch (err) {
         console.log(err);
@@ -110,7 +121,7 @@ const CharacterDelete = () => {
     <div className="App">
       {allData.length > 0 ? (
         <>
-          <h2 style={{ textAlign: "center" }}> Update Character</h2>
+          <h2 style={{ textAlign: "center" }}> Delete Character</h2>
           <Form className="form">
             <FormDropDown
               style={{ maxHeight: "200px" }}

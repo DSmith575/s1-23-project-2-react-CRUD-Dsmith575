@@ -119,6 +119,7 @@ const CharacterForm = () => {
           inputType={"select"}
           set={setAffinity}
           formMap={affinitySelect}
+          buttonType={"Select"}
         />
 
         {/* Element */}
@@ -128,6 +129,7 @@ const CharacterForm = () => {
           inputType="select"
           set={setElement}
           formMap={elementSelection}
+          buttonType={"Select"}
         />
 
         {/* Rarity */}
@@ -137,6 +139,7 @@ const CharacterForm = () => {
           inputType={"select"}
           set={setRarity}
           formMap={raritySelection}
+          buttonType={"Select"}
         />
 
         {/* Rarity Class name */}
