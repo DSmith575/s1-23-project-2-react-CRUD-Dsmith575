@@ -8,6 +8,7 @@
  * @updated: 2023-06-16
  */
 
+//List of available data for the element dropdown
 export const elementSelection = [
  { value: "None", label: "None" },
  { value: "Fire", label: "Fire" },

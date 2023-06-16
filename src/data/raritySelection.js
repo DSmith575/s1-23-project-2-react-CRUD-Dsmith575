@@ -8,6 +8,7 @@
  * @updated: 2023-06-16
  */
 
+//List of available data for the rarity dropdown
 export const raritySelection = [
  { value: 2, label: 2 },
  { value: 3, label: 3 },

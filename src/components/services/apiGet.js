@@ -33,8 +33,6 @@ const ApiGet = async (endPoint) => {
     data = [];
    }
 
-   console.log(data);
-
    //If API nextPage is null stops trying to fetch data
    if (!resData.nextPage === null) {
     page = resData.nextPage;
