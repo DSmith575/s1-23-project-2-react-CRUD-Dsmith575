@@ -28,39 +28,36 @@ const Characters = () => {
   fetchData();
  }, []);
 
- if (data) {
-  return (
-   <Table hover bordered style={{ textAlign: "center" }}>
-    {console.log(data.length)}
-    <thead>
-     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Element</th>
-      <th>Rarity</th>
-      <th>Class Name</th>
-      <th>Affinity</th>
-      <th>Description</th>
+ return data.length > 0 ? (
+  <Table hover bordered style={{ textAlign: "center" }}>
+   {console.log(data.length)}
+   <thead>
+    <tr>
+     <th>ID</th>
+     <th>Name</th>
+     <th>Element</th>
+     <th>Rarity</th>
+     <th>Class Name</th>
+     <th>Affinity</th>
+     <th>Description</th>
+    </tr>
+   </thead>
+   <tbody>
+    {data.map((d) => (
+     <tr key={d.id} style={{ justifyContent: "center" }}>
+      <td>{d.id}</td>
+      <td>{d.name}</td>
+      <td>{d.element.element}</td>
+      <td>{d.rarity.map((e) => e.rarity)}</td>
+      <td>{d.rarity.map((e) => e.className)}</td>
+      <td>{d.affinity}</td>
+      <td>{d.description}</td>
      </tr>
-    </thead>
-    <tbody>
-     {data.map((d) => (
-      <tr key={d.id} style={{ justifyContent: "center" }}>
-       <td>{d.id}</td>
-       <td>{d.name}</td>
-       <td>{d.element.element}</td>
-       <td>{d.rarity.map((e) => e.rarity)}</td>
-       <td>{d.rarity.map((e) => e.className)}</td>
-       <td>{d.affinity}</td>
-       <td>{d.description}</td>
-      </tr>
-     ))}
-    </tbody>
-   </Table>
-  );
- } else {
-  return <h2 style={{ textAlign: "center" }}>NoData</h2>;
- }
+    ))}
+   </tbody>
+  </Table>
+ ) : (
+  <h2 style={{ textAlign: "center" }}>NoData</h2>
+ );
 };
-
 export default Characters;

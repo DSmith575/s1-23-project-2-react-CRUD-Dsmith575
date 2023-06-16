@@ -31,6 +31,7 @@ const CharacterForm = () => {
  const [element, setElement] = useState("");
 
  //Used to POST the rest of fields after character is posted
+ //This does not need to be reactive as it is not displayed to the user
  let characterId;
 
  //submit button validation, submit button greyed out till all fields are filled in
@@ -157,7 +158,7 @@ const CharacterForm = () => {
      set={setDescription}
     />
 
-    <SubmitButton characterData={valid} buttonType={"Create"} style={{}} />
+    <SubmitButton characterData={valid} buttonText={"Create"} style={{}} />
     <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
      <p>{message}</p>
     </div>

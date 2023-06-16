@@ -26,7 +26,7 @@ const Elements = () => {
   fetchData();
  }, []);
 
- return data > 0 && data != 0 ? (
+ return data.length > 0 ? (
   <Table hover bordered>
    <thead>
     <tr>

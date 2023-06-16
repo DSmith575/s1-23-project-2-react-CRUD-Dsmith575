@@ -72,7 +72,7 @@ const CharacterUpdateForm = () => {
   setName(character.name);
   setAffinity(character.affinity);
   setDescription(character.description);
-  setElement(character.element.map((e) => e.element));
+  setElement(character.element.element);
   setRarity(character.rarity.map((e) => e.rarity));
   setClassName(character.rarity.map((e) => e.className));
  };
@@ -215,7 +215,7 @@ const CharacterUpdateForm = () => {
        set={setDescription}
       />
 
-      <SubmitButton characterData={valid} buttonType={"Update"} style={{}} />
+      <SubmitButton characterData={valid} buttonText={"Update"} style={{}} />
       <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
        <p>{message}</p>
       </div>

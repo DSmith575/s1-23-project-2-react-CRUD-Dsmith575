@@ -127,7 +127,7 @@ const CharacterDelete = () => {
        disableOption={true}
       />
 
-      <SubmitButton characterData={valid} buttonType={"Delete"} style={{}} />
+      <SubmitButton characterData={valid} buttonText={"Delete"} style={{}} />
       <div style={{ textAlign: "center", fontSize: "20px", fontWeight: "600" }}>
        <p>{message}</p>
       </div>

@@ -26,7 +26,7 @@ const Rarities = () => {
   fetchData();
  }, []);
 
- return data && data.length > 0 ? (
+ return data.length > 0 ? (
   <Table hover bordered>
    <thead>
     <tr>

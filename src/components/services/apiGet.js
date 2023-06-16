@@ -25,14 +25,17 @@ const ApiGet = async (endPoint) => {
    const response = await axios.get(`${API_URL}${endPoint}?sortBy=id&page=${page}`);
    const resData = response.data;
 
-   data = data.concat(resData.data);
-
-   if (data === undefined) {
-    break;
+   //Used for if there is no data in the API At all
+   //Will check if there is any data inside and then concat otherwise returns empty array
+   if (resData && resData.data) {
+    data = data.concat(resData.data);
+   } else {
+    data = [];
    }
 
    console.log(data);
 
+   //If API nextPage is null stops trying to fetch data
    if (!resData.nextPage === null) {
     page = resData.nextPage;
    } else {
