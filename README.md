@@ -25,6 +25,7 @@ git clone https://github.com/otago-polytechnic-bit-courses/s1-23-id607001-projec
 - Run `npm install` to install all dependencies
 - Create a .env || .env.development file in the root directory
 - Save if auto-save isn't turned on
+- Render may need time to wake up if un-used for a while
 
 <!-- TOC --><a name="envdevelopment"></a>
 
