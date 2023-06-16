@@ -61,7 +61,7 @@ REACT_APP_API_URL=https://smitde5-rest-api.onrender.com/api/v1/
 
 ## References
 
-[React documentation](react.dev)  
+[React documentation](https://react.dev)  
 [ReactStrap documentation](https://reactstrap.github.io/?path=/docs/home-installation--page)  
 [Jack Herrington](https://www.youtube.com/@jherr)  
 [Intro Appdev lecture notes](https://github.com/otago-polytechnic-bit-courses/ID607001-intro-app-dev-concepts/tree/s1-23/lecture-notes)
